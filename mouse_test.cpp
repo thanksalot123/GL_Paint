@@ -3,7 +3,7 @@
  *
  *       Filename:  some_shape.cpp
  *
- *    Description:  Assignment1
+ *    Description:  Mouse Input Test
  *
  *        Version:  1.0
  *        Created:  11/09/20 08:15:25 PM IST
@@ -16,11 +16,18 @@
  */
 
 // Import libraries
+#include <GL/freeglut_std.h>
 #include <GL/glut.h>
 #include <iostream>
 
+using namespace std;
+
 // Initialize global variables;
 int x1, y01, x2, y2;
+
+int a, b;
+
+bool lbuttonDown;
 
 // Initialize function
 void myInit() {
@@ -28,6 +35,50 @@ void myInit() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glMatrixMode(GL_PROJECTION);
     gluOrtho2D(0, 500, 0, 500);
+}
+
+void mouse(int button, int state, int x, int y)
+{
+	if (button == GLUT_RIGHT_BUTTON)
+	{
+		if (state == GLUT_DOWN)
+			cout << "Right button pressed"
+			<< endl;
+		else
+			cout << "Right button lifted "
+			<< "at (" << x << "," << y
+			<< ")" << endl;
+	}
+	else if (button == GLUT_LEFT_BUTTON)
+	{
+		if (state == GLUT_DOWN)
+			lbuttonDown = true;
+		else
+			lbuttonDown = false;
+	}
+}
+
+void motion(int x, int y)
+{
+	if (lbuttonDown)
+		cout << "Mouse dragged with left button at "
+		<< "(" << x << "," << y << ")" << endl;
+}
+
+void motionPassive(int x, int y)
+{
+	cout << "Mouse dragged at "
+	<< "(" << x << "," << y << ")" << endl;
+	a = x;
+	b = y;
+}
+
+void entry(int state)
+{
+	if (state == GLUT_ENTERED)
+		cout << "Mouse Entered" << endl;
+	else
+		cout << "Mouse Left" << endl;
 }
 
 // Function to draw pixels
@@ -95,6 +146,10 @@ int main(int argc, char **argv) {
     glutCreateWindow("Bresenham's Line Drawing");
     myInit();
     glutDisplayFunc(myDisplay);
+	glutMouseFunc(mouse);
+	glutMotionFunc(motion);
+	glutPassiveMotionFunc(motionPassive);
+	glutEntryFunc(entry);
     glutMainLoop();
 }
 
