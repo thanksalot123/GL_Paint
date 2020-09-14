@@ -17,6 +17,7 @@
 
 // Import libraries
 #include <GL/freeglut_std.h>
+#include <GL/gl.h>
 #include <GL/glut.h>
 #include <iostream>
 
@@ -25,7 +26,11 @@ using namespace std;
 // Initialize global variables;
 int x1, y01, x2, y2;
 
-int a, b;
+int a = 250;
+int b = 250;
+
+int c = a;
+int d = b;
 
 bool lbuttonDown;
 
@@ -35,6 +40,7 @@ void myInit() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glMatrixMode(GL_PROJECTION);
     gluOrtho2D(0, 500, 0, 500);
+	glPointSize(3.0);
 }
 
 void mouse(int button, int state, int x, int y)
@@ -60,17 +66,18 @@ void mouse(int button, int state, int x, int y)
 
 void motion(int x, int y)
 {
-	if (lbuttonDown)
-		cout << "Mouse dragged with left button at "
-		<< "(" << x << "," << y << ")" << endl;
+	//if (lbuttonDown)
+		//cout << "Mouse dragged with left button at "
+		//<< "(" << x << "," << y << ")" << endl;
 }
 
 void motionPassive(int x, int y)
 {
-	cout << "Mouse dragged at "
-	<< "(" << x << "," << y << ")" << endl;
 	a = x;
-	b = y;
+	b = 500-y;
+	glutPostRedisplay();
+	//cout << "Mouse dragged at "
+	//<< "(" << x << "," << y << ")" << endl;
 }
 
 void entry(int state)
@@ -88,51 +95,13 @@ void draw_pixel(int x, int y) {
     glEnd();
 }
 
-// Function to draw lines
-void draw_line(int x1, int x2, int y01, int y2) {
-    int dx, dy;
-    int incx, incy;
-	int step;
-
-    dx = x2-x1;
-    dy = y2-y01;
-	
-	if (abs(dx) > abs(dy)){
-		step = abs(dx);
-	}else{
-		step = abs(dy);
-	}
-	incx = dx / (float) step;
-	incy = dy / (float) step;
-	
-	int X = x1;
-	int Y = y01;
-
-	for (int i = 0; i <= step; i++)
-	{
-	    draw_pixel(X,Y);
-	    X += incx;
-	    Y += incy;
-	}
-}
-
-// Define the lines to be drawn to make the pattern
-void drawshape(){
-    draw_line(200, 200, 200, 240); 
-    draw_line(200, 240, 240, 240);
-    draw_line(240, 240, 240, 200);
-    draw_line(240, 200, 200, 200);
-    draw_line(200, 220, 220, 240);
-    draw_line(220, 240, 240, 220);
-    draw_line(240, 220, 220, 200);
-    draw_line(220, 200, 200, 220);
-
-}
 
 // Display function
 void myDisplay() {
-    drawshape();
-    glFlush();
+	draw_pixel(a, b);
+	glBegin(GL_POINTS);
+	glEnd();
+	glFlush();
 }
 
 
