@@ -59,25 +59,26 @@ void mouse(int button, int state, int x, int y)
 	{
 		if (state == GLUT_DOWN)
 			lbuttonDown = true;
-		else
+		else if (state == GLUT_UP)
 			lbuttonDown = false;
 	}
 }
 
 void motion(int x, int y)
 {
-	//if (lbuttonDown)
-		//cout << "Mouse dragged with left button at "
-		//<< "(" << x << "," << y << ")" << endl;
+	if (lbuttonDown)
+		cout << "Mouse dragged with left button at "
+		<< "(" << x << "," << y << ")" << endl;
+	glutPostRedisplay();
 }
 
 void motionPassive(int x, int y)
 {
 	a = x;
-	b = 500-y;
+	b = 500 - y;
 	glutPostRedisplay();
-	//cout << "Mouse dragged at "
-	//<< "(" << x << "," << y << ")" << endl;
+	cout << "Mouse dragged at "
+	<< "(" << x << "," << y << ")" << endl;
 }
 
 void entry(int state)
@@ -90,17 +91,20 @@ void entry(int state)
 
 // Function to draw pixels
 void draw_pixel(int x, int y) {
-    glBegin(GL_POINTS);
-    glVertex2i(x, y);
-    glEnd();
+	glBegin(GL_POINTS);
+		glVertex2i(250, 250);
+	glEnd();
+	if (lbuttonDown){
+    	glBegin(GL_POINTS);
+    		glVertex2i(x, y);
+    	glEnd();
+	}
 }
 
 
 // Display function
 void myDisplay() {
 	draw_pixel(a, b);
-	glBegin(GL_POINTS);
-	glEnd();
 	glFlush();
 }
 
