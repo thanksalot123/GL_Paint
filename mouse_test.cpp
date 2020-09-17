@@ -32,6 +32,8 @@ int b = 250;
 int c = a;
 int d = b;
 
+int counter = 0;
+
 bool lbuttonDown;
 
 // Initialize function
@@ -43,8 +45,7 @@ void myInit() {
 	glPointSize(3.0);
 }
 
-void mouse(int button, int state, int x, int y)
-{
+void mouse(int button, int state, int x, int y) {
 	if (button == GLUT_RIGHT_BUTTON)
 	{
 		if (state == GLUT_DOWN)
@@ -67,20 +68,25 @@ void mouse(int button, int state, int x, int y)
 void motion(int x, int y)
 {
 	if (lbuttonDown)
-		cout << "Mouse dragged with left button at "
-		<< "(" << x << "," << y << ")" << endl;
+		//cout << "Mouse dragged with left button at "
+		//<< "(" << x << "," << y << ")" << endl;
+	c = a;
+	d = b;
 	a = x;
 	b = 500 - y;
+	cout << c << " , " << d << " ; " << a << " , " << b << endl;
 	glutPostRedisplay();
 }
 
 void motionPassive(int x, int y)
 {
+	c = a;
+	d = b;
 	a = x;
 	b = 500 - y;
 	glutPostRedisplay();
-	cout << "Mouse dragged at "
-	<< "(" << x << "," << y << ")" << endl;
+	//cout << "Mouse dragged at "
+	//<< "(" << x << "," << y << ")" << endl;
 }
 
 void entry(int state)
@@ -110,7 +116,8 @@ void myDisplay() {
 		glVertex2i(250, 250);
 	glEnd();
 	if (lbuttonDown){
-    	glBegin(GL_POINTS);
+    	glBegin(GL_LINES);
+			glVertex2i(c, d);
     		glVertex2i(a, b);
     	glEnd();
 	}
