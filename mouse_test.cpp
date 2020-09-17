@@ -69,6 +69,8 @@ void motion(int x, int y)
 	if (lbuttonDown)
 		cout << "Mouse dragged with left button at "
 		<< "(" << x << "," << y << ")" << endl;
+	a = x;
+	b = 500 - y;
 	glutPostRedisplay();
 }
 
@@ -104,7 +106,14 @@ void draw_pixel(int x, int y) {
 
 // Display function
 void myDisplay() {
-	draw_pixel(a, b);
+	glBegin(GL_POINTS);
+		glVertex2i(250, 250);
+	glEnd();
+	if (lbuttonDown){
+    	glBegin(GL_POINTS);
+    		glVertex2i(a, b);
+    	glEnd();
+	}
 	glFlush();
 }
 
