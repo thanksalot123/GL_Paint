@@ -70,41 +70,25 @@ void motionPassive(int x, int y)
     glutPostRedisplay();
 }
 
-void entry(int state)
-{
-    if (state == GLUT_ENTERED)
-        cout << "Mouse Entered" << endl;
-    else
-        cout << "Mouse Left" << endl;
-}
+//void entry(int state)
+//{
+//    if (state == GLUT_ENTERED)
+//        cout << "Mouse Entered" << endl;
+//    else
+//        cout << "Mouse Left" << endl;
+//}
 
 // Function to draw pixels
 void draw_pixel(int x, int y) {
+    dda_circle(250, 250, 10);
     glBegin(GL_POINTS);
         glVertex2i(250, 250);
     glEnd();
-    dda_circle(250, 250, 100);
-    DrawCircle(250, 250, 10, 5)
     if (lbuttonDown){
         glBegin(GL_POINTS);
             glVertex2i(x, y);
             glEnd();
-        dda_circle(0, 0, 100);
-        glBegin(GL_LINE_LOOP);
-        float cx = x;
-        float cy = y;
-        int num_segments = 5;
-        for(int ii = 0; ii < num_segments; ii++)
-        {
-
-            float r = 100;
-            float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);//get the current angle
-            float x = r * cosf(theta);//calculate the x component
-            float y = r * sinf(theta);//calculate the y component
-            glVertex2f(x + cx, y + cy);//output vertex
-
-                }
-            glEnd();
+        dda_circle(x, y, 10);
     }
 }
 
@@ -114,14 +98,11 @@ void myDisplay() {
     glBegin(GL_POINTS);
         glVertex2i(250, 250);
     glEnd();
+    dda_circle(250, 250, 10);
     if (lbuttonDown){
-        glBegin(GL_LINES);
-            glVertex2i(c, d);
-            glVertex2i(a, b);
-        glEnd();
+        CircleBrush(a, b, 10);
     }
     glFlush();
-    DrawCircle(0.5, 0.5, 3.5, 5);
 }
 
 
