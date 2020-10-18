@@ -31,19 +31,33 @@ void myInit() {
     gluOrtho2D(0, 500, 0, 500);
     glPointSize(3.0);
 }
+void keyboard(unsigned char Key, int x, int y){
+    if(Key=='x'){
+        glClear(GL_COLOR_BUFFER_BIT);
+        glutPostRedisplay();
+        cout << "Keyboard works" << endl;
+    }
+}
 
 void mouse(int button, int state, int x, int y) {
     if (button == GLUT_RIGHT_BUTTON)
     {
         if (state == GLUT_DOWN)
+        {
             rbuttonDown = true;
+            glutPostRedisplay();
+
+        }
         else if (state == GLUT_UP)
             rbuttonDown = false;
     }
     else if (button == GLUT_LEFT_BUTTON)
     {
         if (state == GLUT_DOWN)
+        {
             lbuttonDown = true;
+            glutPostRedisplay();
+        }
         else if (state == GLUT_UP)
             lbuttonDown = false;
     }
@@ -51,7 +65,6 @@ void mouse(int button, int state, int x, int y) {
 
 void motion(int x, int y)
 {
-    if (lbuttonDown)
     c = a;
     d = b;
     a = x;
@@ -69,7 +82,7 @@ void motionPassive(int x, int y)
 }
 
 // Function to draw pixels
-void draw_pixel(int x, int y) {
+void draw_pixel() {
     if (lbuttonDown){
         SquareBrush(a, b, 10);
     }
@@ -82,7 +95,7 @@ void draw_pixel(int x, int y) {
 
 // Display function
 void myDisplay() {
-    draw_pixel(a, b);
+    draw_pixel();
     glFlush();
 }
 
@@ -95,11 +108,12 @@ int main(int argc, char **argv) {
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Bresenham's Line Drawing");
-    myInit();
     glutDisplayFunc(myDisplay);
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
+    glutKeyboardFunc(keyboard);
     glutPassiveMotionFunc(motionPassive);
+    myInit();
     glutMainLoop();
 }
 
