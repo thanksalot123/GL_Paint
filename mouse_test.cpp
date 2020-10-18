@@ -21,6 +21,7 @@ int d = b;
 int counter = 0;
 
 bool lbuttonDown;
+bool rbuttonDown;
 
 // Initialize function
 void myInit() {
@@ -35,12 +36,9 @@ void mouse(int button, int state, int x, int y) {
     if (button == GLUT_RIGHT_BUTTON)
     {
         if (state == GLUT_DOWN)
-            cout << "Right button pressed"
-            << endl;
-        else
-            cout << "Right button lifted "
-            << "at (" << x << "," << y
-            << ")" << endl;
+            rbuttonDown = true;
+        else if (state == GLUT_UP)
+            rbuttonDown = false;
     }
     else if (button == GLUT_LEFT_BUTTON)
     {
@@ -70,38 +68,21 @@ void motionPassive(int x, int y)
     glutPostRedisplay();
 }
 
-//void entry(int state)
-//{
-//    if (state == GLUT_ENTERED)
-//        cout << "Mouse Entered" << endl;
-//    else
-//        cout << "Mouse Left" << endl;
-//}
-
 // Function to draw pixels
 void draw_pixel(int x, int y) {
-    dda_circle(250, 250, 10);
-    glBegin(GL_POINTS);
-        glVertex2i(250, 250);
-    glEnd();
     if (lbuttonDown){
-        glBegin(GL_POINTS);
-            glVertex2i(x, y);
-            glEnd();
-        dda_circle(x, y, 10);
+        SquareBrush(a, b, 10);
+    }
+
+    if (rbuttonDown){
+        glClear(GL_COLOR_BUFFER_BIT);
     }
 }
 
 
 // Display function
 void myDisplay() {
-    glBegin(GL_POINTS);
-        glVertex2i(250, 250);
-    glEnd();
-    dda_circle(250, 250, 10);
-    if (lbuttonDown){
-        CircleBrush(a, b, 10);
-    }
+    draw_pixel(a, b);
     glFlush();
 }
 
@@ -119,7 +100,6 @@ int main(int argc, char **argv) {
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
     glutPassiveMotionFunc(motionPassive);
-    glutEntryFunc(entry);
     glutMainLoop();
 }
 

@@ -65,3 +65,14 @@ void CircleBrush(float cx, float cy, float r)
     }
     glEnd();
 }
+
+void SquareBrush(float cx, float cy, float r)
+{
+  glBegin(GL_POLYGON);
+  int l = 2*r;
+  glVertex2f(cx + r, cy + r);
+  glVertex2f(cx + r, cy - r);
+  glVertex2f(cx - r, cy - r);
+  glVertex2f(cx - r, cy + r);
+  glEnd();
+}
