@@ -1,11 +1,13 @@
-
 // Import libraries
 #include <GL/freeglut_std.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <iostream>
 
+#include "math_functions.h"
+#include "brushes.h"
 #include "shapes.h"
+#include "buttons.h"
 
 using namespace std;
 
@@ -31,14 +33,21 @@ void myInit() {
     gluOrtho2D(0, 500, 0, 500);
     glPointSize(3.0);
 }
+
+
+// Keyboard input functions
+// {{{
 void keyboard(unsigned char Key, int x, int y){
     if(Key=='x'){
         glClear(GL_COLOR_BUFFER_BIT);
         glutPostRedisplay();
-        cout << "Keyboard works" << endl;
+        cout << "Clear Screen!" << endl;
     }
 }
+// }}}
 
+// Mouse input functions
+// {{{
 void mouse(int button, int state, int x, int y) {
     if (button == GLUT_RIGHT_BUTTON)
     {
@@ -80,11 +89,12 @@ void motionPassive(int x, int y)
     b = 500 - y;
     glutPostRedisplay();
 }
+/// }}}
 
 // Function to draw pixels
 void draw_pixel() {
     if (lbuttonDown){
-        SquareBrush(a, b, 10);
+        TriBrush(a, b, 50);
     }
 
     if (rbuttonDown){

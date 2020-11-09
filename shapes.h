@@ -1,8 +1,30 @@
 #include <GL/glut.h>
 #include <iostream>
+#include <string>
 #include <math.h>
 
+//#include "math_functions.h"
+
 using namespace std;
+
+//void DrawCircle(float cx, float cy, float r, int num_segments);
+//
+//void ShapeDrawer(int *x, int *y, string shp, bool *butt_state){
+//  int a = *x;
+//  int b = *y;
+//
+//  int rad = dist(a, b, x, y);
+//
+//  if(shp == "circle"){
+//    while(true){
+//      DrawCircle(a, b, rad, 10);
+//      if(!(*butt_state)){
+//        break;
+//      }
+//  }
+//
+//}
+
 
 void DrawCircle(float cx, float cy, float r, int num_segments)
 {
@@ -49,30 +71,3 @@ void dda_circle (int x,int y,int R)
      glFlush();
 }
 
-void CircleBrush(float cx, float cy, float r)
-{
-    int num_segments = 50;
-    glBegin(GL_POLYGON);
-    for(int ii = 0; ii < num_segments; ii++)
-    {
-        float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);//get the current angle
-
-        float x = r * cosf(theta);//calculate the x component
-        float y = r * sinf(theta);//calculate the y component
-
-        glVertex2f(x + cx, y + cy);//output vertex
-
-    }
-    glEnd();
-}
-
-void SquareBrush(float cx, float cy, float r)
-{
-  glBegin(GL_POLYGON);
-  int l = 2*r;
-  glVertex2f(cx + r, cy + r);
-  glVertex2f(cx + r, cy - r);
-  glVertex2f(cx - r, cy - r);
-  glVertex2f(cx - r, cy + r);
-  glEnd();
-}
