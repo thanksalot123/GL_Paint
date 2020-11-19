@@ -4,7 +4,7 @@
 #include <GL/glut.h>
 #include <iostream>
 
-#include "math_functions.h"
+#include "global_vars.h"
 #include "brushes.h"
 #include "shapes.h"
 #include "buttons.h"
@@ -22,8 +22,8 @@ int d = b;
 
 int counter = 0;
 
-bool lbuttonDown;
-bool rbuttonDown;
+bool lbuttonDown = false;
+bool rbuttonDown = false;
 
 // Initialize function
 void myInit() {
@@ -78,7 +78,7 @@ void motion(int x, int y)
     d = b;
     a = x;
     b = 500 - y;
-    glutPostRedisplay();
+    //glutPostRedisplay();
 }
 
 void motionPassive(int x, int y)
@@ -87,17 +87,23 @@ void motionPassive(int x, int y)
     d = b;
     a = x;
     b = 500 - y;
-    glutPostRedisplay();
+    //glutPostRedisplay();
 }
 /// }}}
 
 // Function to draw pixels
 void draw_pixel() {
+
+    int *x = &a;
+    int y = *x;
+
     if (lbuttonDown){
-        TriBrush(a, b, 50);
+        glutPostRedisplay();
+        ShapeDrawer("circle");
     }
 
     if (rbuttonDown){
+        glutPostRedisplay();
         glClear(GL_COLOR_BUFFER_BIT);
     }
 }
@@ -112,6 +118,9 @@ void myDisplay() {
 
 // The main function
 int main(int argc, char **argv) {
+
+    a = 250;
+    b = 250;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);

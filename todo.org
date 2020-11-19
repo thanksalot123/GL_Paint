@@ -2,7 +2,12 @@
 #+DESCRIPTION: This is a file to store things related to 2nd Sem Mini Project
 #+AUTHOR: Parvesh Kumar
 
-* Things to do: [0/6] [0%]
+* Things to do: [0/7] [0%]
+** STRT Learn and organize project in multiple source files:
+*** What to put in the header files:
+ - Global variable decalrations
+ - Classes
+ - Function templates
 ** TODO Paint Brushes: [3/4]
  - [X] Square
  - [X] Circle
