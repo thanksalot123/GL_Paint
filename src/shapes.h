@@ -8,6 +8,9 @@ public:
     virtual void drawShape() {
 
     }
+    virtual void drawHollow() {
+    
+    }
     virtual void resize(float r) {
 
     }
@@ -22,6 +25,7 @@ private:
 public:
     circlebrush(float x, float y, float r);
     void drawShape();
+    void drawHollow();
 };
 
 class squarebrush : public brushshapes
@@ -33,6 +37,7 @@ private:
 public:
     squarebrush(float x, float y, float r);
     void drawShape();
+    void drawHollow();
 };
 
 class trianglebrush : public brushshapes
@@ -44,7 +49,13 @@ private:
 public:
     trianglebrush(float x, float y, float r);
     void drawShape();
+    void drawHollow();
 };
+
+
+
+
+
 
 /* void DrawCircle(float cx, float cy, float r, int num_segments)
 {
