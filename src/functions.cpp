@@ -210,10 +210,12 @@ void draw_pixel() {
         else
             shapes = new circlebrush(a, b, 5);       
         
-
         if (!hollow)
             shapes->drawShape();
-        else shapes->drawHollow();
+        else if (hollow && option != shape[line])
+            shapes->drawHollow();
+        else shapes->drawShape();
+    
     }
 
     if (rbuttonDown) {
