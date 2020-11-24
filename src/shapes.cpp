@@ -110,6 +110,3 @@ void trianglebrush::drawHollow()
     glVertex2f(x3, y3);
     glEnd();
 }
-
-
-
