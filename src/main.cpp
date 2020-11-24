@@ -1,11 +1,12 @@
 // Import libraries
+
 #if !defined(__linux__) 
 #include <windows.h>
 #endif
 #include <GL/glut.h>
 #include "functions.h"
 #include "variables.h"
-using namespace std;
+#include "Window.h"
 
 //declaring the global variables
 int x1, y01, x2, y2;
@@ -17,11 +18,9 @@ int b = 250;
 int c = a;
 int d = b;
 
-bool hollow = false;
-
-float R = 0.0, G = 0.0, B = 0.0;
-
 int counter = 0;
+
+float R{ 0.0f }, G{ 0.0f }, B{ 0.0f };
 
 int size_brush = 20;
 
@@ -30,7 +29,6 @@ bool rbuttonDown;
 
 int shape[5] = { 0,1,2,3,4 };
 int option = shape[line];
-
 
 // Initialize function
 void myInit() {
@@ -44,7 +42,7 @@ void myInit() {
 
 // Display function
 void myDisplay() {
-    pallete();
+    drawPallete();
     draw_pixel();
     glFlush();
 }
@@ -52,18 +50,16 @@ void myDisplay() {
 // The main function
 int main(int argc, char **argv) 
 {
-
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
-    glutInitWindowSize(1000, 500);
-    glutInitWindowPosition(0, 0);
-    glutCreateWindow("JUST_PAINT");
+    // We can also use the member functions of this class to
+    // set window parameters instead of using the constructor
+    Window window(1000,500,"Just PAINT",GLUT_RGB);
+    glutInit(&argc, argv);                          
+    window.WindowInit();
+    window.createWindow();
     gllmenu();
     glutDisplayFunc(myDisplay);
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
-    glutKeyboardFunc(keyboard);
-    glutPassiveMotionFunc(motionPassive);
+    window.UserResponce();
+    window.ResetWindowSize();
     myInit();
     glutMainLoop();
 }
