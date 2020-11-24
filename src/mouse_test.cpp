@@ -1,5 +1,4 @@
 // Import libraries
-
 #if !defined(__linux__) 
 #include <windows.h>
 #endif
@@ -18,9 +17,11 @@ int b = 250;
 int c = a;
 int d = b;
 
-int counter = 0;
+bool hollow = false;
 
-float R{ 0.0f }, G{ 0.0f }, B{ 0.0f };
+float R = 0.0, G = 0.0, B = 0.0;
+
+int counter = 0;
 
 int size_brush = 20;
 
@@ -29,6 +30,7 @@ bool rbuttonDown;
 
 int shape[5] = { 0,1,2,3,4 };
 int option = shape[line];
+
 
 // Initialize function
 void myInit() {
@@ -42,7 +44,7 @@ void myInit() {
 
 // Display function
 void myDisplay() {
-    drawPallete();
+    pallete();
     draw_pixel();
     glFlush();
 }
@@ -50,11 +52,12 @@ void myDisplay() {
 // The main function
 int main(int argc, char **argv) 
 {
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
     glutInitWindowSize(1000, 500);
     glutInitWindowPosition(0, 0);
-    glutCreateWindow("PAINT BUT NOT FROM MICROSOFT");
+    glutCreateWindow("JUST_PAINT");
     gllmenu();
     glutDisplayFunc(myDisplay);
     glutMouseFunc(mouse);
