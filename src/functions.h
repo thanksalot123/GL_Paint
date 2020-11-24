@@ -8,5 +8,4 @@ void mouse(int button, int state, int x, int y);
 void motion(int x, int y);
 void motionPassive(int x, int y);
 void draw_pixel();
-void pallete();
-
+void drawPallete();

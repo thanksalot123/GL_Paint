@@ -20,6 +20,8 @@ int d = b;
 
 int counter = 0;
 
+bool hollow = false;
+
 float R{ 0.0f }, G{ 0.0f }, B{ 0.0f };
 
 int size_brush = 20;

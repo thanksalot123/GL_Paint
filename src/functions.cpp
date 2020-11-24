@@ -1,10 +1,10 @@
-#include<GL/glut.h>
+#include <GL/glut.h>
 #include "shapes.h"
 #include "variables.h"
 
 //i sawed these functions in half!!!
 
-void pallete()
+void drawPallete()
 {
     glBegin(GL_POLYGON);
     glVertex2f(0, 0);
@@ -34,7 +34,7 @@ void draw_pixel() {
         
         if (!hollow)
             shapes->drawShape();
-        else if (hollow && option != shape[line])
+        else if (hollow && option != shape[line] && option != shape[eraser])
             shapes->drawHollow();
         else shapes->drawShape();
     

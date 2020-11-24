@@ -78,6 +78,8 @@ void Window::Keyboard(unsigned char Key, int x, int y)
         size_brush--;
         glutPostRedisplay();
     }
+    else if (Key == 'h')
+        hollow = !hollow;
     else if (option != shape[eraser])
     {
         if (Key == 'r' && R < 0.9f)
