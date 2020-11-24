@@ -1,19 +1,17 @@
 // Import libraries
-#include <GL/freeglut_std.h>
-#include <GL/gl.h>
+
+#if !defined(__linux__) 
+#include <windows.h>
+#endif
 #include <GL/glut.h>
-#include <iostream>
-
-#include "global_vars.h"
-#include "brushes.h"
-#include "shapes.h"
-#include "buttons.h"
-
+#include "functions.h"
+#include "variables.h"
 using namespace std;
 
-// Initialize global variables;
+//declaring the global variables
 int x1, y01, x2, y2;
 
+bool l_b = false;
 int a = 250;
 int b = 250;
 
@@ -22,111 +20,42 @@ int d = b;
 
 int counter = 0;
 
-bool lbuttonDown = false;
-bool rbuttonDown = false;
+float R{ 0.0f }, G{ 0.0f }, B{ 0.0f };
+
+int size_brush = 20;
+
+bool lbuttonDown;
+bool rbuttonDown;
+
+int shape[5] = { 0,1,2,3,4 };
+int option = shape[line];
 
 // Initialize function
 void myInit() {
+    glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glColor3f(R, G, B);
     glMatrixMode(GL_PROJECTION);
-    gluOrtho2D(0, 500, 0, 500);
+    gluOrtho2D(0, 1000, 500, 0);
     glPointSize(3.0);
 }
 
-
-// Keyboard input functions
-// {{{
-void keyboard(unsigned char Key, int x, int y){
-    if(Key=='x'){
-        glClear(GL_COLOR_BUFFER_BIT);
-        glutPostRedisplay();
-        cout << "Clear Screen!" << endl;
-    }
-}
-// }}}
-
-// Mouse input functions
-// {{{
-void mouse(int button, int state, int x, int y) {
-    if (button == GLUT_RIGHT_BUTTON)
-    {
-        if (state == GLUT_DOWN)
-        {
-            rbuttonDown = true;
-            glutPostRedisplay();
-
-        }
-        else if (state == GLUT_UP)
-            rbuttonDown = false;
-    }
-    else if (button == GLUT_LEFT_BUTTON)
-    {
-        if (state == GLUT_DOWN)
-        {
-            lbuttonDown = true;
-            glutPostRedisplay();
-        }
-        else if (state == GLUT_UP)
-            lbuttonDown = false;
-    }
-}
-
-void motion(int x, int y)
-{
-    c = a;
-    d = b;
-    a = x;
-    b = 500 - y;
-    //glutPostRedisplay();
-}
-
-void motionPassive(int x, int y)
-{
-    c = a;
-    d = b;
-    a = x;
-    b = 500 - y;
-    //glutPostRedisplay();
-}
-/// }}}
-
-// Function to draw pixels
-void draw_pixel() {
-
-    int *x = &a;
-    int y = *x;
-
-    if (lbuttonDown){
-        glutPostRedisplay();
-        ShapeDrawer("circle");
-    }
-
-    if (rbuttonDown){
-        glutPostRedisplay();
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
-}
-
-
 // Display function
 void myDisplay() {
+    drawPallete();
     draw_pixel();
     glFlush();
 }
 
-
 // The main function
-int main(int argc, char **argv) {
-
-    a = 250;
-    b = 250;
-
+int main(int argc, char **argv) 
+{
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
-    glutInitWindowSize(500, 500);
+    glutInitWindowSize(1000, 500);
     glutInitWindowPosition(0, 0);
-    glutCreateWindow("Bresenham's Line Drawing");
+    glutCreateWindow("PAINT BUT NOT FROM MICROSOFT");
+    gllmenu();
     glutDisplayFunc(myDisplay);
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
@@ -135,4 +64,3 @@ int main(int argc, char **argv) {
     myInit();
     glutMainLoop();
 }
-
