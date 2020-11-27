@@ -3,6 +3,7 @@
 #include "variables.h"
 
 //i sawed these functions in half!!!
+static brushshapes* shapes = new circlebrush();
 
 void drawPallete()
 {
@@ -14,34 +15,42 @@ void drawPallete()
     glEnd();
 }
 
-void draw_pixel() {
-
-    brushshapes* shapes = new circlebrush(a, b, 5);
-    if (lbuttonDown) {
-        if (option == shape[circle])
-            shapes = new circlebrush(a, b, size_brush);
-        else if (option == shape[square])
-            shapes = new squarebrush(a, b, size_brush);
-        else if (option == shape[triangle])
-            shapes = new trianglebrush(a, b, size_brush);
-        else if (option == shape[eraser])
+void draw_pixel() 
+{
+    if (lbuttonDown)
+    {
+        if (option == shape[line])
         {
-            glColor3f(1.0, 1.0, 1.0);
-            shapes = new squarebrush(a, b, size_brush);
+            shapes->drawShape(a, b, 5);
+        }
+        else if (hollow && option != shape[eraser])
+        {
+            shapes->drawHollow(a, b, size_brush);
         }
         else
-            shapes = new circlebrush(a, b, 5);       
-        
-        if (!hollow)
-            shapes->drawShape();
-        else if (hollow && option != shape[line] && option != shape[eraser])
-            shapes->drawHollow();
-        else shapes->drawShape();
-    
+        {         
+            shapes->drawShape(a, b, size_brush);
+        }
     }
+}
 
-    if (rbuttonDown) {
-        glClear(GL_COLOR_BUFFER_BIT);
+void setShape(brushshapes* object, int option)
+{
+    if (option == shape[square])
+    {
+        shapes = new squarebrush();
+    }
+    else if (option == shape[triangle])
+    {
+        shapes = new trianglebrush();
+    }
+    else if (option == shape[eraser])
+    {
+        shapes = new squarebrush();
+    }
+    else
+    {
+        shapes = new circlebrush();
     }
 }
 
@@ -49,6 +58,10 @@ void menu(int value)
 {
     option = value;
     value == shape[eraser] ? glColor3f(1.0, 1.0, 1.0) : glColor3f(R, G, B);
+    //to delete the previos heap allocated memory
+    delete shapes;
+    shapes = nullptr;
+    setShape(shapes, option);
 }
 
 void gllmenu()
@@ -60,7 +73,7 @@ void gllmenu()
     glutAddMenuEntry("triangle", shape[triangle]);
     glutAddMenuEntry("line", shape[line]);
     glutAddMenuEntry("eraser", shape[eraser]);
-
+    
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 }

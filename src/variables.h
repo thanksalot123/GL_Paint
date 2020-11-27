@@ -18,6 +18,7 @@ extern bool hollow;
 
 extern int size_brush;
 
+
 extern bool lbuttonDown;
 extern bool rbuttonDown;
 
