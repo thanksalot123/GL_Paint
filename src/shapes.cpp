@@ -1,29 +1,38 @@
+#include <GL/glut.h>
+#include <math.h>
 #include "shapes.h"
 
-circlebrush::circlebrush(float x, float y, float r)
-    :cx(x), cy(y), r(r)
+brushshapes::~brushshapes()
 {
 
 }
 
-void circlebrush::drawShape()
+circlebrush::circlebrush()
+{
+
+}
+
+circlebrush::~circlebrush()
+{
+
+}
+
+void circlebrush::drawShape(float cx, float cy, float r)
 {
     int num_segments = 50;
     glBegin(GL_POLYGON);
     for (int ii = 0; ii < num_segments; ii += 1)
     {
-        float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);//get the current angle
-
+        float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);//get the current angle        
         float x = r * cosf(theta);//calculate the x component
         float y = r * sinf(theta);//calculate the y component
 
-        glVertex2f(x + cx, y + cy);//output vertex
-
+        glVertex2f(x + cx, y + cy);//output vertex           
     }
     glEnd();
 }
 
-void circlebrush::drawHollow()
+void circlebrush::drawHollow(float cx, float cy, float r)
 {
     int num_segments = 50;
     glBegin(GL_LINE_LOOP);
@@ -40,13 +49,12 @@ void circlebrush::drawHollow()
     glEnd();
 }
 
-squarebrush::squarebrush(float x, float y, float r)
-    :cx(x), cy(y), r(r)
+squarebrush::squarebrush()
 {
 
 }
 
-void squarebrush::drawShape()
+void squarebrush::drawShape(float cx, float cy, float r)
 {
     glBegin(GL_POLYGON);
     int l = 2 * r;
@@ -57,7 +65,7 @@ void squarebrush::drawShape()
     glEnd();
 }
 
-void squarebrush::drawHollow()
+void squarebrush::drawHollow(float cx, float cy, float r)
 {
     glBegin(GL_LINE_LOOP);
     int l = 2 * r;
@@ -70,13 +78,12 @@ void squarebrush::drawHollow()
 
 
 
-trianglebrush::trianglebrush(float x, float y, float r)
-    :cx(x), cy(y), r(r)
+trianglebrush::trianglebrush()
 {
 
 }
 
-void trianglebrush::drawShape() 
+void trianglebrush::drawShape(float cx, float cy, float r)
 {
     float x1 = cx;
     float x2 = cx + 2 * r * cos(3.414 / 3); // for some reason without multiplying by 2 ( 2*r*cos... ) the triangle was looking wierd
@@ -94,7 +101,7 @@ void trianglebrush::drawShape()
 }
 
 
-void trianglebrush::drawHollow()
+void trianglebrush::drawHollow(float cx, float cy, float r)
 {
     float x1 = cx;
     float x2 = cx + 2 * r * cos(3.414 / 3); // for some reason without multiplying by 2 ( 2*r*cos... ) the triangle was looking wierd

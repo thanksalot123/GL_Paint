@@ -1,15 +1,14 @@
 #pragma once
 class Window
 {
+public:	
 
-public:
-	
 	Window();
 	Window(int windowWidth, int windowHeight, const char* windowName, unsigned int displayMode);
-	void WindowInit();
-	void createWindow();
-	void ResetWindowSize();
-	void UserResponce();
+	void WindowInit() const;
+	void createWindow() const;
+	void ResetWindowSize() const;
+	void UserResponce() const;
 	void SetWindowPosition(int x, int y);
 	void SetWindowDimensions(int w, int h);
 	void SetWindowName(const char* windowName);
@@ -20,7 +19,7 @@ public:
 	static void PassToCallback(int width, int height);
 
 private:
-	
+
 	int m_WindowPosX, m_WindowPosY;
 	int m_WindowHeight, m_WindowWidth;
 	unsigned int m_DisplayMode;

@@ -20,24 +20,24 @@ Window::Window(int windowWidth, int windowHeight, const char* windowName, unsign
     s_WindowWidth = m_WindowWidth;
 }
 
-void Window::WindowInit()
+void Window::WindowInit() const
 {
     glutInitDisplayMode(m_DisplayMode);
     glutInitWindowSize(m_WindowWidth, m_WindowHeight);
     glutInitWindowPosition(m_WindowPosX, m_WindowPosY);
 }
 
-void Window::createWindow()
+void Window::createWindow() const
 {
     glutCreateWindow(m_WindowName);
 }
 
-void Window::ResetWindowSize()
+void Window::ResetWindowSize() const
 {
-    glutReshapeFunc(PassToCallback);
+    glutReshapeFunc([](int x, int y) { glutReshapeWindow(s_WindowWidth, s_WindowHeight); });
 }
 
-void Window::UserResponce()
+void Window::UserResponce() const
 {
     glutMouseFunc(Mouse);
     glutMotionFunc(Motion);

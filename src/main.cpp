@@ -1,11 +1,11 @@
 // Import libraries
-
 #if !defined(__linux__) 
 #include <windows.h>
 #endif
 #include <GL/glut.h>
 #include "functions.h"
 #include "variables.h"
+#include "shapes.h"
 #include "Window.h"
 
 //declaring the global variables
