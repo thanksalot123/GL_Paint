@@ -1,8 +1,9 @@
 // Import libraries
 #if !defined(__linux__) 
 #include <windows.h>
-#endif
 #include <FreeImage.h>
+#endif
+#include<FreeImage.h>
 #include <GL/glut.h>
 #include "functions.h"
 #include "variables.h"
