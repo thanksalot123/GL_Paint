@@ -4,3 +4,4 @@
 void gllmenu();
 void draw_pixel();
 void drawPallete();
+void saveScreenshot();

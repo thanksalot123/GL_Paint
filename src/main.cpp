@@ -2,6 +2,7 @@
 #if !defined(__linux__) 
 #include <windows.h>
 #endif
+#include <FreeImage.h>
 #include <GL/glut.h>
 #include "functions.h"
 #include "variables.h"
@@ -52,6 +53,7 @@ void myDisplay() {
 // The main function
 int main(int argc, char **argv) 
 {
+    FreeImage_Initialise();
     // We can also use the member functions of this class to
     // set window parameters instead of using the constructor
     Window window(1000,500,"Just PAINT",GLUT_RGB);
@@ -64,4 +66,5 @@ int main(int argc, char **argv)
     window.ResetWindowSize();
     myInit();
     glutMainLoop();
+    FreeImage_DeInitialise();
 }
