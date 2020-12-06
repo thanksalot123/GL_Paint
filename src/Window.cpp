@@ -1,5 +1,6 @@
 #include<GL/glut.h>
 #include "shapes.h"
+#include "functions.h"
 #include "variables.h"
 #include "Window.h"
 
@@ -72,6 +73,10 @@ void Window::Keyboard(unsigned char Key, int x, int y)
     {
         size_brush++;
         glutPostRedisplay();
+    }
+    else if (Key == 's')
+    {
+        saveScreenshot();
     }
     else if (Key == '-' && size_brush > 1.0f)
     {

@@ -104,7 +104,7 @@ void trianglebrush::drawShape(float cx, float cy, float r)
 void trianglebrush::drawHollow(float cx, float cy, float r)
 {
     float x1 = cx;
-    float x2 = cx + 2 * r * cos(3.414 / 3); // for some reason without multiplying by 2 ( 2*r*cos... ) the triangle was looking wierd
+    float x2 = cx + 2 * r * cos(3.414 / 3); // for some reason without multiplying by 2 ( 2*r*cos... ) the triangle was looking weird
     float x3 = cx - 2 * r * cos(3.414 / 3);
 
     float y1 = cy + r;
