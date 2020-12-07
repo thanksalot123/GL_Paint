@@ -1,15 +1,12 @@
-#include<GL/glut.h>
+#include <FreeImage.h>
+#include <GL/glut.h>
 #include "shapes.h"
 #include "variables.h"
 
 //i sawed these functions in half!!!
+static brushshapes* shapes = new circlebrush();
 
-void SetColor()
-{
-    glColor3f(0.0,0.0,0.0);
-}
-
-void pallete()
+void drawPallete()
 {
     glBegin(GL_POLYGON);
     glVertex2f(0, 0);
@@ -19,207 +16,55 @@ void pallete()
     glEnd();
 }
 
+void saveScreenshot() {
+    
+    int bufferSize = 1000 * 500;
+    BYTE* pixelArray = new BYTE[3 * bufferSize];
+    glReadBuffer(GL_FRONT);
+    glReadPixels(0, 0, 1000, 500, 0x80E0, GL_UNSIGNED_BYTE, pixelArray);
 
-void keyboard(unsigned char Key, int x, int y) {
-    if (Key == 'x') {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glutPostRedisplay();
-    }
-    else if (Key == '+' && size_brush > 0)
-    {
-        size_brush++;
-        glutPostRedisplay();   
-    }
-    else if (Key == '-' && size_brush > 1)
-    {
-        size_brush--;
-        glutPostRedisplay();
-    }
-    else if (Key == 'r' && R < 0.9)
-    {
-        R+=0.1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-    }
-    else if (Key == 'b' && B < 0.9)
-    {
-        B+=0.1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-    }
-    else if (Key == 'g' && G < 0.9)
-    {
-        G+=0.1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-    }
-    else if (Key == '1')
-    {
-        R = 1;
-        G = 0;
-        B = 0;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
+    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixelArray, 1000, 500, 1000 * 3, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
 
-    }
-    else if (Key == '2')
-    {
-        R = 0;
-        G = 0;
-        B = 1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-
-    }
-    else if (Key == '3')
-    {
-        R = 0;
-        G = 1;
-        B = 0;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-
-    }
-    else if (Key == '4')
-    {
-        R = 1;
-        G = 0;
-        B = 1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-
-    }
-    else if (Key == '5')
-    {
-        R = 0;
-        G = 1;
-        B = 1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-
-    }
-    else if (Key == '6')
-    {
-        R = 1;
-        G = 1;
-        B = 0;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-
-    }
-    else if (Key == '0')
-    {
-        R = 0;
-        G = 0;
-        B = 0;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-
-    }
-    else if (Key == 'R' && R > 0)
-    {
-        R -= 0.1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-    }
-    else if (Key == 'B' && B > 0)
-    {
-        B -= 0.1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-    }
-    else if (Key == 'G' && G > 0)
-    {
-        G -= 0.1;
-        glColor3f(R, G, B);
-        glutPostRedisplay();
-    }
-    else if (Key == 'h')
-    {
-        hollow = true;
-
-    }
-    else if (Key == 'f')
-    {
-        hollow = false;
-    }
-
+    FreeImage_Save(FIF_JPEG, image, "screenshot.jpeg", 0);
+    delete[] pixelArray;
 }
 
-// Mouse input functions
-void mouse(int button, int state, int x, int y) {
-    if (button == GLUT_RIGHT_BUTTON)
-    {
-        if (state == GLUT_DOWN)
-        {
-            rbuttonDown = true;
-            glutPostRedisplay();
-            
-        }
-        else if (state == GLUT_UP)
-            rbuttonDown = false;
-    }
-    else if (button == GLUT_LEFT_BUTTON)
-    {
-        if (state == GLUT_DOWN)
-        {
-            lbuttonDown = true;
-            glutPostRedisplay();
-        }
-        else if (state == GLUT_UP)
-            lbuttonDown = false;
-    }
-}
-
-void motion(int x, int y)
+void draw_pixel() 
 {
-    c = a;
-    d = b;
-    a = x;
-    b = y;
-    glutPostRedisplay();
-}
-
-void motionPassive(int x, int y)
-{
-    c = a;
-    d = b;
-    a = x;
-    b = y;
-    glutPostRedisplay();
-}
-
-
-
-// Function to draw pixels
-void draw_pixel() {
-
-    brushshapes* shapes = new circlebrush(a, b, 5);
-    if (lbuttonDown) {
-        if (option == shape[circle])
-            shapes = new circlebrush(a, b, size_brush);
-        else if (option == shape[square])
-            shapes = new squarebrush(a, b, size_brush);
-        else if (option == shape[triangle])
-            shapes = new trianglebrush(a, b, size_brush);
-        else if (option == shape[eraser])
+    if (lbuttonDown)
+    {
+        if (option == shape[line])
         {
-            glColor3f(1.0, 1.0, 1.0);
-            shapes = new squarebrush(a, b, size_brush);
+            shapes->drawShape(a, b, 5);
+        }
+        else if (hollow && option != shape[eraser])
+        {
+            shapes->drawHollow(a, b, size_brush);
         }
         else
-            shapes = new circlebrush(a, b, 5);       
-        
-        if (!hollow)
-            shapes->drawShape();
-        else if (hollow && option != shape[line])
-            shapes->drawHollow();
-        else shapes->drawShape();
-    
+        {         
+            shapes->drawShape(a, b, size_brush);
+        }
     }
+}
 
-    if (rbuttonDown) {
-        glClear(GL_COLOR_BUFFER_BIT);
+void setShape(brushshapes* object, int option)
+{
+    if (option == shape[square])
+    {
+        shapes = new squarebrush();
+    }
+    else if (option == shape[triangle])
+    {
+        shapes = new trianglebrush();
+    }
+    else if (option == shape[eraser])
+    {
+        shapes = new squarebrush();
+    }
+    else
+    {
+        shapes = new circlebrush();
     }
 }
 
@@ -227,6 +72,10 @@ void menu(int value)
 {
     option = value;
     value == shape[eraser] ? glColor3f(1.0, 1.0, 1.0) : glColor3f(R, G, B);
+    //to delete the previos heap allocated memory
+    delete shapes;
+    shapes = nullptr;
+    setShape(shapes, option);
 }
 
 void gllmenu()
@@ -238,9 +87,7 @@ void gllmenu()
     glutAddMenuEntry("triangle", shape[triangle]);
     glutAddMenuEntry("line", shape[line]);
     glutAddMenuEntry("eraser", shape[eraser]);
-
+    
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 }
-
-

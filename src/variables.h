@@ -12,21 +12,19 @@ extern float R;
 extern float G;
 extern float B;
 
+extern int counter;
 
 extern bool hollow;
 
-
-
-extern int counter;
-
 extern int size_brush;
+
 
 extern bool lbuttonDown;
 extern bool rbuttonDown;
 
 enum menu_type : unsigned char
 {
-    circle, square, triangle, line , eraser
+    circle, square, triangle, line, eraser
 };
 
 extern int shape[];
